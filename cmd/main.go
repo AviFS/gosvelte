@@ -42,9 +42,13 @@ func main() {
 	// fs := http.FileServer(http.Dir("assets"))
 
 	mux := http.NewServeMux()
+
+	// Serve static files from the /static/public folder to the /static url
+	fileServer := http.FileServer(http.Dir("./static/public"))
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+
 	mux.HandleFunc("/blog", blogHandler)
 	mux.HandleFunc("/", indexHandler)
-	// mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	http.ListenAndServe(":"+port, mux)
 
 }
