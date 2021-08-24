@@ -3,18 +3,23 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"path/filepath"
 )
 
-// var tpl = template.Must(template.ParseFiles("index.html"))
-
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	tpl := template.Must(template.ParseFiles("templates/index.html"))
-	tpl.Execute(w, nil)
+	base := filepath.Join("templates", "base.html")
+	index := filepath.Join("templates", "index.html")
+
+	tmpl := template.Must(template.ParseFiles(base, index))
+	tmpl.ExecuteTemplate(w, "base", nil)
 }
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {
-	tpl := template.Must(template.ParseFiles("templates/blog.html"))
-	tpl.Execute(w, nil)
+	base := filepath.Join("templates", "base.html")
+	index := filepath.Join("templates", "blog.html")
+
+	tmpl := template.Must(template.ParseFiles(base, index))
+	tmpl.ExecuteTemplate(w, "base", nil)
 }
 
 func main() {
